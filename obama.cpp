@@ -16,9 +16,9 @@ void Obama::render(RenderWindow &w){
 	w.draw(*sprite);
 }
 void Obama::jump(){
-	_y -= 64;
+	//_y -= 64;
 	sprite->setRotation(0);
-	_factor_speed = -0.25;
+	_factor_speed = -0.55;
 }
 void Obama::Update(Time time){
 	if(_factor_speed <0.34)

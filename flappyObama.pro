@@ -15,11 +15,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     obama.cpp \
-    map.cpp
+    map.cpp \
+    food.cpp
 
 HEADERS  += mainwindow.h \
     obama.h \
-    map.h
+    map.h \
+    food.h
 
 FORMS    += mainwindow.ui
 
