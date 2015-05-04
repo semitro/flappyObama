@@ -16,7 +16,7 @@ Map::~Map()
 	delete sprite_city;
 }
 void Map::update(Time time){
-	_anim_coeff -= time.asMicroseconds()/2.5;
+	_anim_coeff -= time.asMicroseconds()/6236;
 	if(_anim_coeff < -16)
 		_anim_coeff = 0;
 }

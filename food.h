@@ -14,6 +14,7 @@ public:
    ~Food();
 	void draw(RenderWindow &w);
 	void update(Time time);
+	sf::Sprite getSprite();
 protected:
 	bool _firendly; // Ест Обама или не ест?
 	Texture texture;
