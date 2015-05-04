@@ -10,6 +10,7 @@ public:
 	~Map();
 	void render(RenderWindow &w);
 	void update(Time time);
+	float getGrassPosY();
 private:
 	Texture texture_grass;
 	Texture texture_city; // Трава и фон

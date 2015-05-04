@@ -10,13 +10,21 @@ using sf::Time;
 class Food
 {
 public:
-	Food(char *filenameOfTexture,bool friendly);
+	enum FoodType{
+		Balalaika,
+		Matryoshka,
+		Putin
+	};
+	Food(FoodType type);
    ~Food();
+
 	void draw(RenderWindow &w);
 	void update(Time time);
 	sf::Sprite getSprite();
+	FoodType getType();
 protected:
-	bool _firendly; // Ест Обама или не ест?
+	float _rotation_factor; // Чтоб объекты крутились
+	FoodType _type;
 	Texture texture;
 	Sprite *sprite;
 };

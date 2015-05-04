@@ -33,3 +33,6 @@ void Map::render(RenderWindow &w){
 	}
 
 }
+float Map::getGrassPosY(){
+	return sprite_grass->getPosition().y;
+}
