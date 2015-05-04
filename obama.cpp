@@ -18,6 +18,7 @@ void Obama::render(RenderWindow &w){
 void Obama::kill(Food::FoodType killed_by){
 	if(!_alive) // Смерть одна
 		return;
+	_alive = false;
 	if(killed_by == Food::Balalaika){
 		_alive = false;
 		static Music music;
@@ -36,6 +37,7 @@ void Obama::kill(Food::FoodType killed_by){
 	//r	static Music music;
 
 	}
+
 }
 void Obama::kill_by_ground(){
 	if(!_alive)
@@ -43,8 +45,12 @@ void Obama::kill_by_ground(){
 	_alive = false;
 
 	static Music music;
-	music.openFromFile("Sounds/aaa.ogg");
+	//music.openFromFile("Sounds/aaa.ogg");
 	music.play();
+}
+void Obama::arise(){
+	_alive = true;
+	_factor_speed -= 0.2;
 }
 
 void Obama::jump(){

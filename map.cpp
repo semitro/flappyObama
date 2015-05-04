@@ -15,7 +15,9 @@ Map::~Map()
 	delete sprite_grass;
 	delete sprite_city;
 }
-void Map::update(Time time){
+void Map::update(Time time,bool obama_alive){
+	if(!obama_alive)
+		return;
 	_anim_coeff -= time.asMicroseconds()/6236;
 	if(_anim_coeff < -16)
 		_anim_coeff = 0;

@@ -15,6 +15,7 @@ public:
 	void Update(sf::Time time);
 	void checkIntersect(Food &food);
 	void checkIntersect(Map& map);
+	void arise(); // Воскресни!
 	Sprite getSrite();
 	bool intersect(Food &food);
 	bool alive();

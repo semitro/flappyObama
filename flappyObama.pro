@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     obama.cpp \
     map.cpp \
-    food.cpp
+    food.cpp \
+    menu.cpp
 
 HEADERS  += mainwindow.h \
     obama.h \
     map.h \
-    food.h
+    food.h \
+    menu.h
 
 FORMS    += mainwindow.ui
 

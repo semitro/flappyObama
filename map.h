@@ -9,7 +9,7 @@ public:
 	Map();
 	~Map();
 	void render(RenderWindow &w);
-	void update(Time time);
+	void update(Time time,bool obama_alive);
 	float getGrassPosY();
 private:
 	Texture texture_grass;

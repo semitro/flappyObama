@@ -13,6 +13,7 @@ public:
 	enum FoodType{
 		Balalaika,
 		Matryoshka,
+		Vodka,
 		Putin
 	};
 	Food(FoodType type);
@@ -23,6 +24,7 @@ public:
 	sf::Sprite getSprite();
 	FoodType getType();
 protected:
+	float _speed_factor; // Чтоб летели с разной скоростью
 	float _rotation_factor; // Чтоб объекты крутились
 	FoodType _type;
 	Texture texture;
