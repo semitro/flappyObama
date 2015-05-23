@@ -4,6 +4,7 @@
 #include <SFML/Audio.hpp>
 #include "food.h"
 #include "map.h"
+#include <sstream>
 using namespace sf;
 
 class Obama{
@@ -12,10 +13,13 @@ public:
 	~Obama();
 	void jump(); // Прыгай, Обама!
 	void render(RenderWindow &w);
+	void renderScore(RenderWindow &w);
 	void Update(sf::Time time);
 	void checkIntersect(Food &food);
 	void checkIntersect(Map& map);
 	void arise(); // Воскресни!
+	void addScore(int ball=1);
+	int getScore();
 	Sprite getSrite();
 	bool intersect(Food &food);
 	bool alive();
@@ -25,9 +29,11 @@ private:
 	void kill_by_ground(); // Погиб от падения
 	bool _alive; // Жив ли Обама?
 	float _factor_speed; // Ускорение падения
+	int _score; // Счёт
 	Texture _texture; // Лицо Обамы
 	Sprite *sprite;
+	Font _font; // Шрифт для текста
+	Text *_text_score; // Вывод счёта
 };
-
 #endif // OBAMA_H
 

@@ -14,7 +14,6 @@ using namespace sf;
 int main(int argc, char *argv[])
 {
 	std::srand(std::time(NULL));
-
 	Map map;
 	Menu menu;
 	std::list<Food*> balalaikes;
@@ -48,7 +47,6 @@ int main(int argc, char *argv[])
 			nextFoodSpawnTime = rand()%5;
 			nextFoodSpawnTimer.restart();
 		}
-
 		while(w.pollEvent(event))
 		{
 			if(event.type == Event::Closed)
@@ -56,6 +54,9 @@ int main(int argc, char *argv[])
 			if(event.type == Event::MouseButtonPressed)
 					if(Mouse::isButtonPressed(Mouse::Left))
 						obama.jump();
+			if(event.type == Event::KeyPressed)
+				if(Keyboard::isKeyPressed(Keyboard::Space))
+				obama.jump();
 		}
 
 
@@ -70,11 +71,14 @@ int main(int argc, char *argv[])
 		}
 		for(it_balala=balalaikes.begin();it_balala!=balalaikes.end(); )
 		{
+
 			// Уничтожение вылетевших балалаек
 			Food *tempFood = *it_balala;
-			if(tempFood->getSprite().getPosition().x < -128){
+			if(tempFood->getSprite().getPosition().x < -128){ // Если еда вылетела
 				it_balala = balalaikes.erase(it_balala);
 				delete tempFood;
+				obama.addScore();
+
 			}
 			else
 				it_balala++;
@@ -83,20 +87,20 @@ int main(int argc, char *argv[])
 		obama.checkIntersect(map);
 
 		if(!obama.alive()){
-			menu.update(obama);
+				menu.update(obama);
 
 			static RectangleShape lens(Vector2f(w.getSize().x,w.getSize().y));
 			lens.setFillColor(Color(2,4,8,128));
-
 			lens.setPosition(0,0);
 			w.draw(lens);
 			menu.render(w);
 
 		}
 		obama.render(w);
-
+		obama.renderScore(w);
 		w.display();
 		w.clear();
+		qDebug()<<obama.getScore();
 
 	}
 	return 0;
