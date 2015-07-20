@@ -1,6 +1,6 @@
 #include "food.h"
 Food::Food(FoodType type){
-	_bitten = true;
+	_bitten = false;
 	_rotation_factor = (rand()%100-55)/10;
 	_speed_factor = (10+rand()%20)/10;
 	_type = type;
@@ -56,7 +56,7 @@ void Food::eat(){
 	sprite->move(-800,0);
 }
 void Food::bite(){
-	_bitten = false;
+	_bitten = true;
 }
 bool Food::bitten(){
 	return _bitten;

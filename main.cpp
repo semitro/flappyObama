@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 				if(rand()%40 == 0) // Путин бывает редко
 					balalaikes.push_back(new Food(Food::Putin));
 				else
-				if(rand()%2 == 0)
+				if(rand()%25 == 0)
 						balalaikes.push_back(new Food(Food::Kli4ko));
 				else
 					balalaikes.push_back(new Food(Food::FoodType(rand()%3)));

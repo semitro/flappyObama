@@ -25,7 +25,7 @@ public:
 	bool alive();
 private:
 	Food::FoodType _killed_by; // Запоминаем, от чего погиб Обама?
-	void kill(Food::FoodType); // На самом деле, Обаму мы не убиваем, а выполняем это действие при пересечении с едой
+	void kill(Food &); // На самом деле, Обаму мы не убиваем, а выполняем это действие при пересечении с едой
 	void kill_by_ground(); // Погиб от падения
 	bool _alive; // Жив ли Обама?
 	float _factor_speed; // Ускорение падения

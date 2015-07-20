@@ -22,16 +22,21 @@ Obama::~Obama(){
 void Obama::render(RenderWindow &w){
 	w.draw(*sprite);
 }
-void Obama::kill(Food::FoodType killed_by){
+void Obama::kill(Food &food){
+	Food::FoodType killed_by = food.getType();
 	if(!_alive) // Смерть одна
 		return;
 
 	if(killed_by == Food::Gambyrger){
 		addScore(5); // Гамбургег прибавляет очки
 		return;	} // И посему выходим из функции
-	if(killed_by == Food::Kli4ko && ){
-		addScore(rand()%15-7); // К сожалению, сегодня мы не можем никто знать,
-		return;				  // Сколько баллов прибавит или отнимет столкновенике с #Кличко
+	if(killed_by == Food::Kli4ko){
+	 // Bitten нужен для того, чтобы очки с одного Кличко не начислялись fps раз за секунду
+		if(!food.bitten()){
+			food.bite();			// К сожалению, сегодня мы не можем никто знать,
+			addScore(rand()%15-7); // Сколько баллов прибавит или отнимет столкновенике с #Кличко
+		}
+		return;
 	}
 	//Убиваем обаму
 	_alive = false;
@@ -102,7 +107,7 @@ bool Obama::intersect(Food &food){
 }
 void Obama::checkIntersect(Food &food){
 		if(Obama::intersect(food))
-			Obama::kill(food.getType());
+			Obama::kill(food);
 		if(Obama::intersect(food) && food.getType() == Food::Gambyrger)
 			food.eat();
 
