@@ -12,7 +12,7 @@ Obama::Obama(RenderWindow &w){
 	_text_score = new Text("0",_font,32);
 	_text_score->setColor(Color(rand()%255,rand()%255,rand()%255));
 	_text_score->setPosition(w.getSize().x-_text_score->getGlobalBounds().width*2,w.getSize().y-_text_score->getGlobalBounds().height*2);
-
+	flap_sound.openFromFile("Sounds/flap.ogg");
 }
 Obama::~Obama(){
 	delete sprite;
@@ -25,25 +25,42 @@ void Obama::render(RenderWindow &w){
 void Obama::kill(Food::FoodType killed_by){
 	if(!_alive) // Смерть одна
 		return;
-	_alive = false;
-	if(killed_by == Food::Balalaika){
-		_alive = false;
-		static Music music;
-		music.openFromFile("Sounds/balalaika.ogg");
-		music.play();
-	}
-		else
-	if(killed_by == Food::Matryoshka){
-		_alive = false;
-		static Music music;
-		music.openFromFile("Sounds/laught.ogg");
-		music.play();
-	}
-	if(killed_by == Food::Putin){
-		_alive = false;
-	//r	static Music music;
 
+	if(killed_by == Food::Gambyrger){
+		addScore(5); // Гамбургег прибавляет очки
+		return;	} // И посему выходим из функции
+	if(killed_by == Food::Kli4ko && ){
+		addScore(rand()%15-7); // К сожалению, сегодня мы не можем никто знать,
+		return;				  // Сколько баллов прибавит или отнимет столкновенике с #Кличко
 	}
+	//Убиваем обаму
+	_alive = false;
+	static Music sound;
+
+	switch (killed_by) {
+	case Food::Balalaika:{
+		int select = rand()%2;
+		if(select == 0)
+			sound.openFromFile("Sounds/Balalaika/balalaika.ogg");
+		else
+			sound.openFromFile("Sounds/Balalaika/balalaika2.ogg");
+		}
+		break;
+	case Food::Matryoshka:
+		sound.openFromFile("Sounds/laught.ogg");
+		break;
+	case Food::Vodka:
+		int select = rand()%3;
+			if(select == 0)
+				sound.openFromFile("Sounds/Vodka/Vodka1.ogg");
+					else
+			if(select == 1)
+				sound.openFromFile("Sounds/Vodka/Vodka2.ogg");
+					else
+				sound.openFromFile("Sounds/Vodka/Vodka3.ogg");
+		break;
+	}
+	sound.play();
 
 }
 void Obama::kill_by_ground(){
@@ -59,11 +76,14 @@ void Obama::arise(){
 	_score = 0;
 	_alive = true;
 	_factor_speed -= 0.2;
+	_text_score->setColor(Color(rand()%255,rand()%255,rand()%255));
 }
 
 void Obama::jump(){
+	flap_sound.play();
 	sprite->setRotation(0);
-	_factor_speed = -0.52;
+	if(sprite->getPosition().y > - 32)
+		_factor_speed = -0.47;
 }
 void Obama::Update(Time time){
 	if(!_alive)
@@ -83,6 +103,9 @@ bool Obama::intersect(Food &food){
 void Obama::checkIntersect(Food &food){
 		if(Obama::intersect(food))
 			Obama::kill(food.getType());
+		if(Obama::intersect(food) && food.getType() == Food::Gambyrger)
+			food.eat();
+
 }
 void Obama::checkIntersect(Map &map){
 	if(sprite->getPosition().y+64 > map.getGrassPosY())

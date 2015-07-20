@@ -14,6 +14,8 @@ public:
 		Balalaika,
 		Matryoshka,
 		Vodka,
+		Gambyrger,
+		Kli4ko,
 		Putin
 	};
 	Food(FoodType type);
@@ -21,6 +23,9 @@ public:
 
 	void draw(RenderWindow &w);
 	void update(Time time);
+	void eat(); // 'Съесть' объект (объект исчезнет)
+	void bite(); // 'Укусить объект' (объект не исчезнет, но с Обамой перестанет взаимодействовать)
+	bool bitten(); // Укушен ли объект?
 	sf::Sprite getSprite();
 	FoodType getType();
 protected:
@@ -29,6 +34,7 @@ protected:
 	FoodType _type;
 	Texture texture;
 	Sprite *sprite;
+	bool _bitten; //Не укущена ли уже еда? (Частично костыль, частично грамотная штука)
 };
 
 

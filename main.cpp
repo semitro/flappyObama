@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 #include "obama.h"
 #include "map.h"
 #include "food.h"
@@ -13,6 +14,12 @@ using std::vector;
 using namespace sf;
 int main(int argc, char *argv[])
 {
+	static Music background; // Первым делом музыка :)
+	background.openFromFile("Sounds/back.ogg");
+	background.setVolume(32);
+	background.setLoop(true);
+	background.play();
+
 	std::srand(std::time(NULL));
 	Map map;
 	Menu menu;
@@ -31,19 +38,25 @@ int main(int argc, char *argv[])
 	nextFoodSpawnTimer.restart();
 	Time currentTime;
 	//main loop
-	while (w.isOpen()) {
-		currentTime = clock.getElapsedTime();
-			clock.restart();
 
-		static int nextFoodSpawnTime = rand()%5;
-		if(int(nextFoodSpawnTimer.getElapsedTime().asSeconds()) == nextFoodSpawnTime ){
-			// Спауним 'еду'
-			if(balalaikes.size() < 7){
+	while(w.isOpen()){
+		currentTime = clock.getElapsedTime();
+		clock.restart();
+		static int nextFoodSpawnTime = rand()%6;
+		// Спауним 'еду'
+		if(int(nextFoodSpawnTimer.getElapsedTime().asSeconds()) == nextFoodSpawnTime)
+			if(balalaikes.size() < 4){
+				if(rand()%15 == 0)
+					balalaikes.push_back(new Food(Food::Gambyrger));
+				else
 				if(rand()%40 == 0) // Путин бывает редко
 					balalaikes.push_back(new Food(Food::Putin));
 				else
+				if(rand()%2 == 0)
+						balalaikes.push_back(new Food(Food::Kli4ko));
+				else
 					balalaikes.push_back(new Food(Food::FoodType(rand()%3)));
-			}
+
 			nextFoodSpawnTime = rand()%5;
 			nextFoodSpawnTimer.restart();
 		}
@@ -75,10 +88,12 @@ int main(int argc, char *argv[])
 			// Уничтожение вылетевших балалаек
 			Food *tempFood = *it_balala;
 			if(tempFood->getSprite().getPosition().x < -128){ // Если еда вылетела
+				if(tempFood->getType() != Food::Gambyrger && obama.alive())
+					obama.addScore();
+				if(tempFood->getType() == Food::Putin)
+					obama.addScore(1); // 1 + 1 = Два балла за путина
 				it_balala = balalaikes.erase(it_balala);
 				delete tempFood;
-				obama.addScore();
-
 			}
 			else
 				it_balala++;
@@ -100,8 +115,6 @@ int main(int argc, char *argv[])
 		obama.renderScore(w);
 		w.display();
 		w.clear();
-		qDebug()<<obama.getScore();
-
 	}
 	return 0;
 }

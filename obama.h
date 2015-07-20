@@ -34,6 +34,7 @@ private:
 	Sprite *sprite;
 	Font _font; // Шрифт для текста
 	Text *_text_score; // Вывод счёта
+	Music flap_sound; // Звук подлёта
 };
 #endif // OBAMA_H
 
