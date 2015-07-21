@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 	Menu menu;
 	std::list<Food*> balalaikes;
 	std::list<Food*>::iterator it_balala;
-	sf::RenderWindow w(VideoMode(64*16,64*9),"FlappyObama, v 0.2",Style::Close);
+	sf::RenderWindow w(VideoMode(64*16,64*9),"FlappyObama, v 2.0",Style::Close);
 	w.setPosition(sf::Vector2i(128,0));
 	w.setFramerateLimit(65);
 	Image img;
@@ -44,19 +44,22 @@ int main(int argc, char *argv[])
 		clock.restart();
 		static int nextFoodSpawnTime = rand()%6;
 		// Спауним 'еду'
-		if(int(nextFoodSpawnTimer.getElapsedTime().asSeconds()) == nextFoodSpawnTime)
+		if(int(nextFoodSpawnTimer.getElapsedTime().asSeconds()) == nextFoodSpawnTime){
 			if(balalaikes.size() < 4){
-				if(rand()%15 == 0)
+				if(rand()%6 == 0)
 					balalaikes.push_back(new Food(Food::Gambyrger));
-				else
+				if(rand()%7 == 0)
+					balalaikes.push_back(new Food(Food::Dollar));
 				if(rand()%40 == 0) // Путин бывает редко
 					balalaikes.push_back(new Food(Food::Putin));
-				else
-				if(rand()%25 == 0)
-						balalaikes.push_back(new Food(Food::Kli4ko));
-				else
-					balalaikes.push_back(new Food(Food::FoodType(rand()%3)));
-
+				if(rand()%18 == 0)
+					balalaikes.push_back(new Food(Food::Kli4ko));
+				if(rand()%200 == 0)
+					balalaikes.push_back(new Food(Food::Nirvana));
+				if(rand()%200 == 0)
+					balalaikes.push_back(new Food(Food::Rammstein));
+				balalaikes.push_back(new Food(Food::FoodType(rand()%3)));
+			}
 			nextFoodSpawnTime = rand()%5;
 			nextFoodSpawnTimer.restart();
 		}
@@ -78,20 +81,21 @@ int main(int argc, char *argv[])
 		map.render(w);
 
 		for(it_balala=balalaikes.begin();it_balala!=balalaikes.end();it_balala++){
-			obama.checkIntersect(*(*it_balala)); // Проверяем столкновение Обамы с едой
+			obama.checkIntersect(*(*it_balala),background); // Проверяем столкновение Обамы с едой
 			(*it_balala)->update(currentTime);// Рисуем и апдейтим балалайки и не только
 			(*it_balala)->draw(w);
 		}
 		for(it_balala=balalaikes.begin();it_balala!=balalaikes.end(); )
 		{
-
 			// Уничтожение вылетевших балалаек
 			Food *tempFood = *it_balala;
 			if(tempFood->getSprite().getPosition().x < -128){ // Если еда вылетела
-				if(tempFood->getType() != Food::Gambyrger && obama.alive())
+				if(tempFood->getType() != Food::Gambyrger // За уворот от бонусов баллы
+					&& tempFood->getType() != Food::Dollar // Не прибавляются
+					&& obama.alive())
 					obama.addScore();
 				if(tempFood->getType() == Food::Putin)
-					obama.addScore(1); // 1 + 1 = Два балла за путина
+					obama.addScore(14); // 1 + 14 = Пятнадцать за Путина
 				it_balala = balalaikes.erase(it_balala);
 				delete tempFood;
 			}
@@ -99,10 +103,10 @@ int main(int argc, char *argv[])
 				it_balala++;
 
 		}
-		obama.checkIntersect(map);
+		obama.checkIntersect(map); // Не врезался ли Обама в землю?
 
-		if(!obama.alive()){
-				menu.update(obama);
+		if(!obama.alive()){ // Если обама погиб
+			menu.update(obama);
 
 			static RectangleShape lens(Vector2f(w.getSize().x,w.getSize().y));
 			lens.setFillColor(Color(2,4,8,128));

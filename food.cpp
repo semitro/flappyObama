@@ -6,6 +6,9 @@ Food::Food(FoodType type){
 	_type = type;
 	if(type == Gambyrger)
 		texture.loadFromFile("Images/gamb.png");
+		else
+	if(type == Dollar)
+		texture.loadFromFile("Images/dollar.png");
 	if(type == Balalaika)
 		texture.loadFromFile("Images/balalaika.png");
 		else
@@ -19,8 +22,14 @@ Food::Food(FoodType type){
 	if(type == Vodka)
 		texture.loadFromFile("Images/vodka.png");
 	else
-	  if(type == Kli4ko)
-		  texture.loadFromFile("Images/kli4ko.png");
+	if(type == Kli4ko)
+		texture.loadFromFile("Images/kli4ko.png");
+	else
+	if(type == Nirvana)
+		texture.loadFromFile("Images/Nirvana.png");
+	else
+	if(type == Rammstein)
+		texture.loadFromFile("Images/Rammstein.png");
 	sprite = new Sprite(texture);
 	sprite->setPosition(1024,rand()%426);
 	sprite->setTextureRect(sf::IntRect(0,0,texture.getSize().x,texture.getSize().y));
@@ -36,9 +45,15 @@ Food::Food(FoodType type){
 	if(type == Kli4ko){
 		_rotation_factor = (rand()%60-30)/10;sprite->scale(0.64+randomScale,0.64+randomScale);}else
 	if(type == Vodka)
-		sprite->scale(0.3+randomScale,0.3+randomScale);
+		sprite->scale(0.3+randomScale,0.3+randomScale);else
 	if(type == Gambyrger)
-		sprite->scale(0.35+randomScale,0.35+randomScale);
+		sprite->scale(0.35+randomScale,0.35+randomScale);else
+	if(type == Dollar)
+		sprite->scale(0.32+randomScale,0.32+randomScale);
+	if(type == Nirvana)
+		sprite->scale(0.25+randomScale,0.25+randomScale);
+	if(type == Rammstein)
+		sprite->scale(0.28+randomScale,0.28+randomScale);
 }
 Food::~Food(){
 	delete sprite;

@@ -18,7 +18,6 @@ Obama::~Obama(){
 	delete sprite;
 	delete _text_score;
 }
-
 void Obama::render(RenderWindow &w){
 	w.draw(*sprite);
 }
@@ -26,43 +25,65 @@ void Obama::kill(Food &food){
 	Food::FoodType killed_by = food.getType();
 	if(!_alive) // Смерть одна
 		return;
+	static Music sound; // Озвучка столкновений
 
 	if(killed_by == Food::Gambyrger){
+		food.eat();
 		addScore(5); // Гамбургег прибавляет очки
-		return;	} // И посему выходим из функции
+		return;	} // И посему выходим из
+	if(killed_by == Food::Dollar){
+		sound.openFromFile("Sounds/money.ogg");
+		sound.play();
+		addScore(2);
+		food.eat();
+		return;
+	}
 	if(killed_by == Food::Kli4ko){
 	 // Bitten нужен для того, чтобы очки с одного Кличко не начислялись fps раз за секунду
 		if(!food.bitten()){
+			int select = rand()%5; // Вариантов озвучки Кличко целых пять
+			if(select == 0)
+				sound.openFromFile("Sounds/Kli4ko/Kli4ko1.ogg");else
+			if(select == 1)
+				sound.openFromFile("Sounds/Kli4ko/Kli4ko2.ogg");else
+			if(select == 2)
+				sound.openFromFile("Sounds/Kli4ko/Kli4ko3.ogg");else
+			if(select == 3)
+				sound.openFromFile("Sounds/Kli4ko/Kli4ko4.ogg");else
+			if(select == 4)
+				sound.openFromFile("Sounds/Kli4ko/Kli4ko5.ogg");
+			sound.play();
 			food.bite();			// К сожалению, сегодня мы не можем никто знать,
 			addScore(rand()%15-7); // Сколько баллов прибавит или отнимет столкновенике с #Кличко
+
 		}
 		return;
 	}
 	//Убиваем обаму
 	_alive = false;
-	static Music sound;
 
 	switch (killed_by) {
-	case Food::Balalaika:{
-		int select = rand()%2;
-		if(select == 0)
+	case Food::Balalaika:
+		if(rand()%2 == 0)
 			sound.openFromFile("Sounds/Balalaika/balalaika.ogg");
 		else
 			sound.openFromFile("Sounds/Balalaika/balalaika2.ogg");
-		}
 		break;
 	case Food::Matryoshka:
 		sound.openFromFile("Sounds/laught.ogg");
 		break;
-	case Food::Vodka:
+	case Food::Vodka:{
 		int select = rand()%3;
 			if(select == 0)
 				sound.openFromFile("Sounds/Vodka/Vodka1.ogg");
 					else
-			if(select == 1)
-				sound.openFromFile("Sounds/Vodka/Vodka2.ogg");
-					else
-				sound.openFromFile("Sounds/Vodka/Vodka3.ogg");
+				if(select == 1)
+					sound.openFromFile("Sounds/Vodka/Vodka2.ogg");
+						else
+					sound.openFromFile("Sounds/Vodka/Vodka3.ogg");}
+		break;
+	case Food::Putin:
+		sound.openFromFile("Sounds/Putin.ogg");
 		break;
 	}
 	sound.play();
@@ -71,19 +92,26 @@ void Obama::kill(Food &food){
 void Obama::kill_by_ground(){
 	if(!_alive)
 		return;
+
 	_alive = false;
 
-	static Music music;
-	//music.openFromFile("Sounds/aaa.ogg");
-	music.play();
+	static Music sound;
+	if(rand()%2 == 0)
+		sound.openFromFile("Sounds/Obama/kill_by_ground1.ogg");
+	else
+		sound.openFromFile("Sounds/Obama/kill_by_ground2.ogg");
+	sound.play();
 }
 void Obama::arise(){
+	static Music sound;
+	sound.openFromFile("Sounds/Obama/arise.ogg");
+	sound.play();
 	_score = 0;
 	_alive = true;
-	_factor_speed -= 0.2;
+	_factor_speed -= 0.1;
+	jump();
 	_text_score->setColor(Color(rand()%255,rand()%255,rand()%255));
 }
-
 void Obama::jump(){
 	flap_sound.play();
 	sprite->setRotation(0);
@@ -99,18 +127,24 @@ void Obama::Update(Time time){
 	sprite->rotate(_factor_speed*(time.asMicroseconds()/4536));
 
 }
-Sprite Obama::getSrite(){
-	return *sprite;
-}
-bool Obama::intersect(Food &food){
-	return sprite->getGlobalBounds().intersects(food.getSprite().getGlobalBounds());
-}
-void Obama::checkIntersect(Food &food){
-		if(Obama::intersect(food))
+void Obama::checkIntersect(Food &food,Music &background){
+		if(Obama::intersect(food)){
+			if(food.getType() == Food::Nirvana){
+				food.eat();
+				background.pause();
+				background.openFromFile("Sounds/SmellsLikeTeenSpirit.ogg");
+				background.setVolume(64);
+				background.play();
+			}else
+				if(food.getType() == Food::Rammstein){
+					food.eat();
+					background.pause();
+					background.openFromFile("Sounds/America.ogg");
+					background.play();
+				}
+			else
 			Obama::kill(food);
-		if(Obama::intersect(food) && food.getType() == Food::Gambyrger)
-			food.eat();
-
+		}
 }
 void Obama::checkIntersect(Map &map){
 	if(sprite->getPosition().y+64 > map.getGrassPosY())
@@ -125,14 +159,18 @@ void Obama::addScore(int ball){
 	_text_score->setString(score_stream.str());
 
 }
-
+void Obama::renderScore(RenderWindow &w){
+		w.draw(*_text_score);
+}
+bool Obama::intersect(Food &food){
+	return sprite->getGlobalBounds().intersects(food.getSprite().getGlobalBounds());
+}
 bool Obama::alive(){
 	return _alive;
 }
 int Obama::getScore(){
 	return _score;
 }
-
-void Obama::renderScore(RenderWindow &w){
-		w.draw(*_text_score);
+Sprite Obama::getSrite(){
+	return *sprite;
 }

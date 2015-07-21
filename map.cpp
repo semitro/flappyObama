@@ -1,13 +1,13 @@
 #include "map.h"
 
 Map::Map()
+
 {
 	texture_grass.loadFromFile("Images/grass.png");
-	texture_city.loadFromFile("Images/city.png");
+	background_image.loadFromFile("Images/city.png");
 	sprite_grass = new Sprite(texture_grass);
 	sprite_grass->setPosition(0,0);
-	sprite_city = new Sprite(texture_city);
-	//sprite_city->setScale(0.5,0.5);
+	sprite_city = new Sprite(background_image);
 	sprite_city->setPosition(0,0);
 }
 Map::~Map()
@@ -18,6 +18,7 @@ Map::~Map()
 void Map::update(Time time,bool obama_alive){
 	if(!obama_alive)
 		return;
+
 	_anim_coeff -= time.asMicroseconds()/6236;
 	if(_anim_coeff < -16)
 		_anim_coeff = 0;

@@ -6,7 +6,6 @@
 #include "map.h"
 #include <sstream>
 using namespace sf;
-
 class Obama{
 public:
 	Obama(RenderWindow &w);
@@ -15,7 +14,7 @@ public:
 	void render(RenderWindow &w);
 	void renderScore(RenderWindow &w);
 	void Update(sf::Time time);
-	void checkIntersect(Food &food);
+	void checkIntersect(Food &food, Music &background);
 	void checkIntersect(Map& map);
 	void arise(); // Воскресни!
 	void addScore(int ball=1);

@@ -13,7 +13,7 @@ public:
 	float getGrassPosY();
 private:
 	Texture texture_grass;
-	Texture texture_city; // Трава и фон
+	Texture background_image; // Трава и фон
 	Sprite *sprite_grass, *sprite_city;
 	float _anim_coeff; // Чтоб трава ехала)
 };

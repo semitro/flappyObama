@@ -15,8 +15,11 @@ public:
 		Matryoshka,
 		Vodka,
 		Gambyrger,
+		Dollar,
 		Kli4ko,
-		Putin
+		Putin,
+		Nirvana,
+		Rammstein
 	};
 	Food(FoodType type);
    ~Food();
