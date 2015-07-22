@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>Images/icon.png</file>
+        <file>Images/balalaika_old.png</file>
+        <file>Images/kli4ko.png</file>
+        <file>Images/obama64.png</file>
+        <file>Images/Putin.png</file>
+        <file>Images/vodka.png</file>
+        <file>Images/gamb.png</file>
+    </qresource>
+</RCC>

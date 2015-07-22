@@ -1,4 +1,5 @@
 #include "food.h"
+#include <qdebug.h>
 Food::Food(FoodType type){
 	_bitten = false;
 	_rotation_factor = (rand()%100-55)/10;
@@ -34,9 +35,10 @@ Food::Food(FoodType type){
 	sprite->setPosition(1024,rand()%426);
 	sprite->setTextureRect(sf::IntRect(0,0,texture.getSize().x,texture.getSize().y));
 
-	float randomScale = (rand()%27)/100;
+	double randomScale = ((rand()%10)/double(500));
+	qDebug()<<randomScale;
 	if(type == Matryoshka)
-		sprite->scale(0.32+randomScale/1.5,0.32+randomScale/1.5);
+		sprite->scale(0.27+randomScale*2,0.28+randomScale*2);
 		else
 	if(type == Balalaika)
 		sprite->scale(0.42+randomScale,0.42+randomScale);

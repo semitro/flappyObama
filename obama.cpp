@@ -61,7 +61,6 @@ void Obama::kill(Food &food){
 	}
 	//Убиваем обаму
 	_alive = false;
-
 	switch (killed_by) {
 	case Food::Balalaika:
 		if(rand()%2 == 0)
@@ -133,13 +132,14 @@ void Obama::checkIntersect(Food &food,Music &background){
 				food.eat();
 				background.pause();
 				background.openFromFile("Sounds/SmellsLikeTeenSpirit.ogg");
-				background.setVolume(64);
+				background.setVolume(35);
 				background.play();
 			}else
 				if(food.getType() == Food::Rammstein){
 					food.eat();
 					background.pause();
 					background.openFromFile("Sounds/America.ogg");
+					background.setVolume(32);
 					background.play();
 				}
 			else
@@ -157,7 +157,8 @@ void Obama::addScore(int ball){
 	std::ostringstream score_stream;
 	score_stream << _score;
 	_text_score->setString(score_stream.str());
-
+	static BestScore bestScore;
+	bestScore.saveIfBest(getScore());
 }
 void Obama::renderScore(RenderWindow &w){
 		w.draw(*_text_score);

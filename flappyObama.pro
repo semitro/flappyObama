@@ -17,13 +17,15 @@ SOURCES += main.cpp\
     obama.cpp \
     map.cpp \
     food.cpp \
-    menu.cpp
+    menu.cpp \
+    bestscore.cpp
 
 HEADERS  += mainwindow.h \
     obama.h \
     map.h \
     food.h \
-    menu.h
+    menu.h \
+    bestscore.h
 
 FORMS    += mainwindow.ui
 
@@ -34,3 +36,6 @@ CONFIG(debug, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-networ
 
 INCLUDEPATH += "/home/semitro/libs/SFML-2.2/include"
 DEPENDPATH += "/home/semitro/libs/SFML-2.2/include"
+
+RESOURCES += \
+    res.qrc

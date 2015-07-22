@@ -5,6 +5,7 @@
 #include "food.h"
 #include "map.h"
 #include <sstream>
+#include <bestscore.h>
 using namespace sf;
 class Obama{
 public:
