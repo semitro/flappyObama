@@ -28,6 +28,8 @@ void Obama::kill(Food &food){
 	static Music sound; // Озвучка столкновений
 
 	if(killed_by == Food::Gambyrger){
+		sound.openFromFile("Sounds/xroom.ogg");
+		sound.play();
 		food.eat();
 		addScore(5); // Гамбургег прибавляет очки
 		return;	} // И посему выходим из
@@ -39,20 +41,21 @@ void Obama::kill(Food &food){
 		return;
 	}
 	if(killed_by == Food::Kli4ko){
+		static Music what_does_kli4ko_say; // Для Кличко отдельный объектик
 	 // Bitten нужен для того, чтобы очки с одного Кличко не начислялись fps раз за секунду
 		if(!food.bitten()){
 			int select = rand()%5; // Вариантов озвучки Кличко целых пять
 			if(select == 0)
-				sound.openFromFile("Sounds/Kli4ko/Kli4ko1.ogg");else
+				what_does_kli4ko_say.openFromFile("Sounds/Kli4ko/Kli4ko1.ogg");else
 			if(select == 1)
-				sound.openFromFile("Sounds/Kli4ko/Kli4ko2.ogg");else
+				what_does_kli4ko_say.openFromFile("Sounds/Kli4ko/Kli4ko2.ogg");else
 			if(select == 2)
-				sound.openFromFile("Sounds/Kli4ko/Kli4ko3.ogg");else
+				what_does_kli4ko_say.openFromFile("Sounds/Kli4ko/Kli4ko3.ogg");else
 			if(select == 3)
-				sound.openFromFile("Sounds/Kli4ko/Kli4ko4.ogg");else
+				what_does_kli4ko_say.openFromFile("Sounds/Kli4ko/Kli4ko4.ogg");else
 			if(select == 4)
-				sound.openFromFile("Sounds/Kli4ko/Kli4ko5.ogg");
-			sound.play();
+				what_does_kli4ko_say.openFromFile("Sounds/Kli4ko/Kli4ko5.ogg");
+			what_does_kli4ko_say.play();
 			food.bite();			// К сожалению, сегодня мы не можем никто знать,
 			addScore(rand()%15-7); // Сколько баллов прибавит или отнимет столкновенике с #Кличко
 

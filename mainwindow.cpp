@@ -50,18 +50,22 @@ void MainWindow::on_StartGameButton_clicked()
 		// Спауним 'еду'
 		if(int(nextFoodSpawnTimer.getElapsedTime().asSeconds()) == nextFoodSpawnTime){
 			if(balalaikes.size() < 4){
+
 				if(rand()%6 == 0)
 					balalaikes.push_back(new Food(Food::Gambyrger));
 				if(rand()%7 == 0)
 					balalaikes.push_back(new Food(Food::Dollar));
-				if(rand()%40 == 0) // Путин бывает редко
-					balalaikes.push_back(new Food(Food::Putin));
 				if(rand()%18 == 0)
 					balalaikes.push_back(new Food(Food::Kli4ko));
-				if(rand()%4096  == 0)
-					balalaikes.push_back(new Food(Food::Nirvana));
+				if(rand()%36 == 0)
+					balalaikes.push_back(new Food(Food::Pechka));
+				if(rand()%40 == 0) // Путин бывает редко
+					balalaikes.push_back(new Food(Food::Putin));
 				if(rand()%2048 == 0)
 					balalaikes.push_back(new Food(Food::Rammstein));
+				if(rand()%4096 == 0)
+					balalaikes.push_back(new Food(Food::Nirvana));
+
 				balalaikes.push_back(new Food(Food::FoodType(rand()%3)));
 			}
 			nextFoodSpawnTime = rand()%5;

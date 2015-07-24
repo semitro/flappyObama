@@ -14,6 +14,7 @@ public:
 		Balalaika,
 		Matryoshka,
 		Vodka,
+		Pechka,
 		Gambyrger,
 		Dollar,
 		Kli4ko,

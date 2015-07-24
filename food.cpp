@@ -1,5 +1,4 @@
 #include "food.h"
-#include <qdebug.h>
 Food::Food(FoodType type){
 	_bitten = false;
 	_rotation_factor = (rand()%100-55)/10;
@@ -31,12 +30,14 @@ Food::Food(FoodType type){
 	else
 	if(type == Rammstein)
 		texture.loadFromFile("Images/Rammstein.png");
+	else
+	if(type == Pechka)
+		texture.loadFromFile("Images/pechka.png");
 	sprite = new Sprite(texture);
 	sprite->setPosition(1024,rand()%426);
 	sprite->setTextureRect(sf::IntRect(0,0,texture.getSize().x,texture.getSize().y));
 
 	double randomScale = ((rand()%10)/double(500));
-	qDebug()<<randomScale;
 	if(type == Matryoshka)
 		sprite->scale(0.27+randomScale*2,0.28+randomScale*2);
 		else
@@ -56,6 +57,12 @@ Food::Food(FoodType type){
 		sprite->scale(0.25+randomScale,0.25+randomScale);
 	if(type == Rammstein)
 		sprite->scale(0.28+randomScale,0.28+randomScale);
+	if(type == Pechka){
+		sprite->scale(0.55+randomScale,0.6+randomScale);
+		sprite->setPosition(1024,512-155); //512 = ширина окна, 128 - высота 'травы'
+		_rotation_factor = 0;
+		_speed_factor = 0.80+(rand()%100)/float(100);
+	}
 }
 Food::~Food(){
 	delete sprite;
