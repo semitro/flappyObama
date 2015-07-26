@@ -24,7 +24,6 @@ void MainWindow::on_StartGameButton_clicked()
 	background.setVolume(32);
 	background.setLoop(true);
 	background.play();
-
 	std::srand(std::time(NULL));
 	Map map;
 	Menu menu;
@@ -50,7 +49,6 @@ void MainWindow::on_StartGameButton_clicked()
 		// Спауним 'еду'
 		if(int(nextFoodSpawnTimer.getElapsedTime().asSeconds()) == nextFoodSpawnTime){
 			if(balalaikes.size() < 4){
-
 				if(rand()%6 == 0)
 					balalaikes.push_back(new Food(Food::Gambyrger));
 				if(rand()%7 == 0)
@@ -68,41 +66,40 @@ void MainWindow::on_StartGameButton_clicked()
 
 				balalaikes.push_back(new Food(Food::FoodType(rand()%3)));
 			}
-			nextFoodSpawnTime = rand()%5;
+			nextFoodSpawnTime = rand()%5; // Время вылета следующего объекта
 			nextFoodSpawnTimer.restart();
 		}
+
 		while(w.pollEvent(event))
 		{
-			if(event.type == Event::Closed)
-					w.close();
+			if(event.type == Event::Closed ||
+			  (event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::Escape)))
+				w.close();
 			if(event.type == Event::MouseButtonPressed)
-					if(Mouse::isButtonPressed(Mouse::Left))
-						obama.jump();
+				if(Mouse::isButtonPressed(Mouse::Left))
+					obama.jump();
 			if(event.type == Event::KeyPressed)
 				if(Keyboard::isKeyPressed(Keyboard::Space))
-				obama.jump();
+					obama.jump();
 		}
-
 
 		obama.Update(currentTime);
 		map.update(currentTime,obama.alive());
 		map.render(w);
-
 		// Проверка столкновения с едой
 		for(it_balala=balalaikes.begin();it_balala!=balalaikes.end();it_balala++){
 			obama.checkIntersect(*(*it_balala),background); // Проверяем столкновение Обамы с едой
 			(*it_balala)->update(currentTime);// Рисуем и апдейтим балалайки и не только
 			(*it_balala)->draw(w);
 		}
-
 		// Уничтожение вылетевших балалаек
 		for(it_balala=balalaikes.begin();it_balala!=balalaikes.end(); )
 		{
 			Food *tempFood = *it_balala;
 			if(tempFood->getSprite().getPosition().x < -128){ // Если еда вылетела
 				if(tempFood->getType() != Food::Gambyrger // За уворот от бонусов баллы
-					&& tempFood->getType() != Food::Dollar // Не прибавляются
-					&& obama.alive())
+						&& tempFood->getType() != Food::Dollar // Не прибавляются
+						&& obama.alive())
 					obama.addScore();
 				if(tempFood->getType() == Food::Putin)
 					obama.addScore(14); // 1 + 14 = Пятнадцать за Путина
@@ -111,19 +108,15 @@ void MainWindow::on_StartGameButton_clicked()
 			}
 			else
 				it_balala++;
-
 		}
 		obama.checkIntersect(map); // Не врезался ли Обама в землю?
-
 		if(!obama.alive()){ // Если обама погиб
 			menu.update(obama);
-
 			static RectangleShape lens(Vector2f(w.getSize().x,w.getSize().y));
 			lens.setFillColor(Color(2,4,8,128));
 			lens.setPosition(0,0);
 			w.draw(lens);
 			menu.render(w);
-
 		}
 		obama.render(w);
 		obama.renderScore(w);
