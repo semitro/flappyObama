@@ -8,11 +8,9 @@
 #include "obama.h"
 #include "map.h"
 #include "food.h"
-#include <vector>
-#include <qdebug.h>
 #include <list>
 #include "menu.h"
-#include <bestscore.h>
+#include "bestscore.h"
 
 namespace Ui {
 class MainWindow;

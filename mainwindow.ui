@@ -126,8 +126,8 @@
    <zorder>label_Obama</zorder>
    <zorder>label_Putin</zorder>
    <zorder>StartGameButton</zorder>
-   <zorder>label_app_name</zorder>
    <zorder>label_score</zorder>
+   <zorder>label_app_name</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

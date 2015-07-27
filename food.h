@@ -24,7 +24,6 @@ public:
 	};
 	Food(FoodType type);
    ~Food();
-
 	void draw(RenderWindow &w);
 	void update(Time time);
 	void eat(); // 'Съесть' объект (объект исчезнет)

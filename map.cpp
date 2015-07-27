@@ -30,7 +30,7 @@ void Map::render(RenderWindow &w){
 
 
 	w.draw(*sprite_grass);
-	for(int i(0);i<w.getSize().x/sprite_grass->getTextureRect().width +1;i++){
+	for(int i(0);i<w.getSize().x/sprite_grass->getTextureRect().width+1;i++){
 			sprite_grass->move(sprite_grass->getTextureRect().width,0);
 		w.draw(*sprite_grass);
 	}

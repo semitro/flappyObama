@@ -1,5 +1,5 @@
 #include <bestscore.h>
-int BestScore::_best_score;
+int BestScore::_best_score; // Переменная статическая
 BestScore::BestScore(){
 	ifstream fin;
 	fin.open("txt/.score.bst");
