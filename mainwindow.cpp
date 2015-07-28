@@ -41,15 +41,20 @@ void MainWindow::on_StartGameButton_clicked()
 	Clock nextFoodSpawnTimer;
 	nextFoodSpawnTimer.restart();
 	Time currentTime;
+	float complexityTime = rand()%2+5; // Сложность будет постепенно увеличиваться
+									  // Сделаем так, что она обратно пропорционально сией переменной
+////////////////////////////////////////////////////////////////////////////////////
 	//main loop
 	while(w.isOpen()){
+		if(complexityTime>0.005)
+			complexityTime -= 0.001;
 		currentTime = clock.getElapsedTime();
 		clock.restart();
-		static int nextFoodSpawnTime = rand()%6;
-		// Спауним 'еду'
+		static int nextFoodSpawnTime = 3+rand()%2;
+///////////////////////////////////////////////////////////////////////////////////
 		if(int(nextFoodSpawnTimer.getElapsedTime().asSeconds()) == nextFoodSpawnTime){
-			if(balalaikes.size() < 4){
-				if(rand()%6 == 0)
+			if(balalaikes.size() < 4+obama.getScore()/10){
+				if(rand()%6 == 0)		// Спауним 'еду'
 					balalaikes.push_back(new Food(Food::Gambyrger));
 				if(rand()%7 == 0)
 					balalaikes.push_back(new Food(Food::Dollar));
@@ -57,7 +62,7 @@ void MainWindow::on_StartGameButton_clicked()
 					balalaikes.push_back(new Food(Food::Kli4ko));
 				if(rand()%36 == 0)
 					balalaikes.push_back(new Food(Food::Pechka));
-				if(rand()%40 == 0) // Путин бывает редко
+				if(rand()%(40-obama.getScore()/50) == 0) // Путин бывает редко
 					balalaikes.push_back(new Food(Food::Putin));
 				if(rand()%2048 == 0)
 					balalaikes.push_back(new Food(Food::Rammstein));
@@ -66,10 +71,10 @@ void MainWindow::on_StartGameButton_clicked()
 
 				balalaikes.push_back(new Food(Food::FoodType(rand()%3)));
 			}
-			nextFoodSpawnTime = rand()%5; // Время вылета следующего объекта
+			nextFoodSpawnTime = rand()%5+complexityTime; // Время вылета следующего объекта
 			nextFoodSpawnTimer.restart();
 		}
-
+////////////////////////////////////////////////////////////////////////////////////
 		while(w.pollEvent(event))
 		{
 			if(event.type == Event::Closed ||
@@ -82,23 +87,27 @@ void MainWindow::on_StartGameButton_clicked()
 				if(Keyboard::isKeyPressed(Keyboard::Space))
 					obama.jump();
 		}
+////////////////////////////////////////////////////////////////////////////////////
 
 		obama.Update(currentTime);
 		map.update(currentTime,obama.alive());
 		map.render(w);
+////////////////////////////////////////////////////////////////////////////////////
 		// Проверка столкновения с едой
 		for(it_balala=balalaikes.begin();it_balala!=balalaikes.end();it_balala++){
 			obama.checkIntersect(*(*it_balala),background); // Проверяем столкновение Обамы с едой
 			(*it_balala)->update(currentTime);// Рисуем и апдейтим балалайки и не только
 			(*it_balala)->draw(w);
 		}
-		// Уничтожение вылетевших балалаек
+////////////////////////////////////////////////////////////////////////////////////
+		// Уничтожение вылетевших балалаек и не только лишь балалаек
 		for(it_balala=balalaikes.begin();it_balala!=balalaikes.end(); )
 		{
 			Food *tempFood = *it_balala;
 			if(tempFood->getSprite().getPosition().x < -128){ // Если еда вылетела
 				if(tempFood->getType() != Food::Gambyrger // За уворот от бонусов баллы
 						&& tempFood->getType() != Food::Dollar // Не прибавляются
+						&& tempFood->getType() != Food::Kli4ko
 						&& obama.alive())
 					obama.addScore();
 				if(tempFood->getType() == Food::Putin)
@@ -109,6 +118,7 @@ void MainWindow::on_StartGameButton_clicked()
 			else
 				it_balala++;
 		}
+////////////////////////////////////////////////////////////////////////////////////
 		obama.checkIntersect(map); // Не врезался ли Обама в землю?
 		if(!obama.alive()){ // Если обама погиб
 			menu.update(obama);
@@ -118,6 +128,7 @@ void MainWindow::on_StartGameButton_clicked()
 			w.draw(lens);
 			menu.render(w);
 		}
+////////////////////////////////////////////////////////////////////////////////////
 		obama.render(w);
 		obama.renderScore(w);
 		w.display();

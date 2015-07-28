@@ -28,6 +28,7 @@ private:
 	void kill(Food &); // На самом деле, Обаму мы не убиваем, а выполняем это действие при пересечении с едой
 	void kill_by_ground(); // Погиб от падения
 	bool _alive; // Жив ли Обама?
+	bool _streak_best; // Лучший счёт подряд или нет?
 	float _factor_speed; // Ускорение падения
 	int _score; // Счёт
 	Texture _texture; // Лицо Обамы

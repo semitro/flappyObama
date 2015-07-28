@@ -28,12 +28,13 @@ HEADERS  += mainwindow.h \
     bestscore.h
 
 FORMS    += mainwindow.ui
-
-LIBS += -L"lib/SFML" #Инсталлятор должен будет скопировать файлы библиотеки в /usr/lib !
+LIBS += -L"/home/semitro/libs/SFML-2.2/lib"
+LIBS += -L"lib" #Инсталлятор должен будет скопировать файлы библиотеки в /usr/lib !
                      #Ещё надо будет создать файл с очками и записать туда значение 0
 CONFIG(release, debug|release): LIBS +=  -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 CONFIG(debug, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
-
+INCLUDEPATH += "/home/semitro/libs/SFML-2.2/include"
+DEPENDPATH += "/home/semitro/libs/SFML-2.2/include"
 INCLUDEPATH += "include"
 DEPENDPATH += "include"
 

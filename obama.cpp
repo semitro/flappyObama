@@ -3,6 +3,7 @@ Obama::Obama(RenderWindow &w){
 	_alive = true;
 	_score = 0;
 	_factor_speed = 0;
+	_streak_best = false;
 	_texture.loadFromFile("Images/obama64.png");
 	_texture.setSmooth(true);// Сглаживание
 	sprite = new Sprite(_texture);
@@ -11,7 +12,7 @@ Obama::Obama(RenderWindow &w){
 	_font.loadFromFile("Fonts/font.ttf");
 	_text_score = new Text("0",_font,32);
 	_text_score->setColor(Color(rand()%255,rand()%255,rand()%255));
-	_text_score->setPosition(w.getSize().x-_text_score->getGlobalBounds().width*2,w.getSize().y-_text_score->getGlobalBounds().height*2);
+	_text_score->setPosition(w.getSize().x-_text_score->getGlobalBounds().width*4,w.getSize().y-_text_score->getGlobalBounds().height*2-4);
 	flap_sound.openFromFile("Sounds/flap.ogg");
 }
 Obama::~Obama(){
@@ -64,6 +65,8 @@ void Obama::kill(Food &food){
 	}
 	//Убиваем обаму
 	_alive = false;
+	//Обнищаем стрик
+	_streak_best = false;
 	switch (killed_by) {
 	case Food::Balalaika:
 		if(rand()%2 == 0)
@@ -89,7 +92,6 @@ void Obama::kill(Food &food){
 		break;
 	}
 	sound.play();
-
 }
 void Obama::kill_by_ground(){
 	if(!_alive)
@@ -161,6 +163,15 @@ void Obama::addScore(int ball){
 	score_stream << _score;
 	_text_score->setString(score_stream.str());
 	static BestScore bestScore;
+	if(bestScore.isBest(getScore())){
+		static bool streak = false; //Чтоб цать раз подряд музычка играла
+		static Music music;
+		music.openFromFile("Sounds/record.ogg");
+		if(!streak){
+			music.play();
+			streak = true;
+		}
+	}
 	bestScore.saveIfBest(getScore());
 }
 void Obama::renderScore(RenderWindow &w){
