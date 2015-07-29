@@ -3,7 +3,7 @@
 Map::Map()
 {
 	texture_grass.loadFromFile("Images/grass.png");
-	background_image.loadFromFile("Images/city.png");
+	background_image.loadFromFile("Images/amrc.jpg");
 	sprite_grass = new Sprite(texture_grass);
 	sprite_grass->setPosition(0,0);
 	sprite_city = new Sprite(background_image);
