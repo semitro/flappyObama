@@ -5,7 +5,6 @@ Menu::Menu()
 	_font.loadFromFile("Fonts/font.ttf");
 	_text = Text(L"Обаму настигли беды!\n\t  Лети, Обама!\nКликните правой кнопкой мыши",_font,42);
 	_text.setColor(Color(28,122,42));
-
 }
 Menu::~Menu()
 {

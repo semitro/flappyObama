@@ -8,4 +8,7 @@
         <file>Images/vodka.png</file>
         <file>Images/gamb.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>../build-flappyObama-Desktop_Qt_5_4_1_GCC_64bit-Debug/Images/iconFlip.png</file>
+    </qresource>
 </RCC>

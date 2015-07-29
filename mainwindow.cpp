@@ -17,17 +17,19 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_StartGameButton_clicked()
 {
+	bool soundsOn = ui->checkBox_sound->isChecked(); // Включать ли звуки?
 	close();
 	//main code
 	static Music background; // Первым делом музыка :)
 	background.openFromFile("Sounds/back.ogg");
 	background.setVolume(32);
 	background.setLoop(true);
-	background.play();
+	if(soundsOn)
+		background.play();
 	std::srand(std::time(NULL));
 	Map map;
 	Menu menu;
-	std::list<Food*> balalaikes;
+	std::list<Food*> balalaikes; // Объекты еды
 	std::list<Food*>::iterator it_balala;
 	sf::RenderWindow w(VideoMode(64*16,64*9),"FlappyObama, v 2.0",Style::Close);
 	w.setPosition(sf::Vector2i(128,0));
@@ -35,7 +37,7 @@ void MainWindow::on_StartGameButton_clicked()
 	Image img;
 	img.loadFromFile("Images/icon.png");
 	w.setIcon(64,64,img.getPixelsPtr());
-	Obama obama(w);
+	Obama obama(w,soundsOn);
 	Event event;
 	Clock clock;
 	Clock nextFoodSpawnTimer;
@@ -53,7 +55,7 @@ void MainWindow::on_StartGameButton_clicked()
 		static int nextFoodSpawnTime = 3+rand()%2;
 ///////////////////////////////////////////////////////////////////////////////////
 		if(int(nextFoodSpawnTimer.getElapsedTime().asSeconds()) == nextFoodSpawnTime){
-			if(balalaikes.size() < 4+obama.getScore()/10){
+			if(balalaikes.size() < 4){
 				if(rand()%6 == 0)		// Спауним 'еду'
 					balalaikes.push_back(new Food(Food::Gambyrger));
 				if(rand()%7 == 0)
@@ -83,12 +85,10 @@ void MainWindow::on_StartGameButton_clicked()
 			if(event.type == Event::MouseButtonPressed)
 				if(Mouse::isButtonPressed(Mouse::Left))
 					obama.jump();
-			if(event.type == Event::KeyPressed)
-				if(Keyboard::isKeyPressed(Keyboard::Space))
+			if(event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::Space))
 					obama.jump();
 		}
 ////////////////////////////////////////////////////////////////////////////////////
-
 		obama.Update(currentTime);
 		map.update(currentTime,obama.alive());
 		map.render(w);

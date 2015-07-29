@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "obama.h"
 using namespace sf;
-class Menu
+class Menu // Меню смерти
 {
 public:
 	Menu();

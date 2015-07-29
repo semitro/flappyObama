@@ -1,5 +1,6 @@
 #include <obama.h>
-Obama::Obama(RenderWindow &w){
+Obama::Obama(RenderWindow &w, bool enableSounds){
+	_enable_sounds = enableSounds;
 	_alive = true;
 	_score = 0;
 	_factor_speed = 0;
@@ -13,7 +14,7 @@ Obama::Obama(RenderWindow &w){
 	_text_score = new Text("0",_font,32);
 	_text_score->setColor(Color(rand()%255,rand()%255,rand()%255));
 	_text_score->setPosition(w.getSize().x-_text_score->getGlobalBounds().width*4,w.getSize().y-_text_score->getGlobalBounds().height*2-4);
-	flap_sound.openFromFile("Sounds/flap.ogg");
+	_flap_sound.openFromFile("Sounds/flap.ogg");
 }
 Obama::~Obama(){
 	delete sprite;
@@ -30,13 +31,15 @@ void Obama::kill(Food &food){
 
 	if(killed_by == Food::Gambyrger){
 		sound.openFromFile("Sounds/xroom.ogg");
-		sound.play();
+		if(_enable_sounds)
+			sound.play();
 		food.eat();
 		addScore(5); // Гамбургег прибавляет очки
 		return;	} // И посему выходим из
 	if(killed_by == Food::Dollar){
 		sound.openFromFile("Sounds/money.ogg");
-		sound.play();
+		if(_enable_sounds)
+			sound.play();
 		addScore(2);
 		food.eat();
 		return;
@@ -56,7 +59,8 @@ void Obama::kill(Food &food){
 				what_does_kli4ko_say.openFromFile("Sounds/Kli4ko/Kli4ko4.ogg");else
 			if(select == 4)
 				what_does_kli4ko_say.openFromFile("Sounds/Kli4ko/Kli4ko5.ogg");
-			what_does_kli4ko_say.play();
+			if(_enable_sounds)
+				what_does_kli4ko_say.play();
 			food.bite();			// К сожалению, сегодня мы не можем никто знать,
 			addScore(rand()%15-7); // Сколько баллов прибавит или отнимет столкновенике с #Кличко
 
@@ -91,7 +95,8 @@ void Obama::kill(Food &food){
 		sound.openFromFile("Sounds/Putin.ogg");
 		break;
 	}
-	sound.play();
+	if(_enable_sounds)
+		sound.play();
 }
 void Obama::kill_by_ground(){
 	if(!_alive)
@@ -104,12 +109,14 @@ void Obama::kill_by_ground(){
 		sound.openFromFile("Sounds/Obama/kill_by_ground1.ogg");
 	else
 		sound.openFromFile("Sounds/Obama/kill_by_ground2.ogg");
-	sound.play();
+	if(_enable_sounds)
+		sound.play();
 }
 void Obama::arise(){
 	static Music sound;
 	sound.openFromFile("Sounds/Obama/arise.ogg");
-	sound.play();
+	if(_enable_sounds)
+		sound.play();
 	_score = 0;
 	_alive = true;
 	_factor_speed -= 0.1;
@@ -117,7 +124,8 @@ void Obama::arise(){
 	_text_score->setColor(Color(rand()%255,rand()%255,rand()%255));
 }
 void Obama::jump(){
-	flap_sound.play();
+	if(_enable_sounds)
+		_flap_sound.play();
 	sprite->setRotation(0);
 	if(sprite->getPosition().y > - 32)
 		_factor_speed = -0.47;
@@ -168,7 +176,8 @@ void Obama::addScore(int ball){
 		static Music music;
 		music.openFromFile("Sounds/record.ogg");
 		if(!streak){
-			music.play();
+			if(_enable_sounds)
+				music.play();
 			streak = true;
 		}
 	}

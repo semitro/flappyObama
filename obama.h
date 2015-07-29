@@ -9,7 +9,7 @@
 using namespace sf;
 class Obama{
 public:
-	Obama(RenderWindow &w);
+	Obama(RenderWindow &w,bool enableSounds=true);
 	~Obama();
 	void jump(); // Прыгай, Обама!
 	void render(RenderWindow &w);
@@ -35,7 +35,8 @@ private:
 	Sprite *sprite;
 	Font _font; // Шрифт для текста
 	Text *_text_score; // Вывод счёта
-	Music flap_sound; // Звук подлёта
+	Music _flap_sound; // Звук подлёта
+	bool _enable_sounds; // Включать ли звуки?
 };
 #endif // OBAMA_H
 

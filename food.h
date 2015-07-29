@@ -31,13 +31,13 @@ public:
 	bool bitten(); // Укушен ли объект?
 	sf::Sprite getSprite();
 	FoodType getType();
-protected:
+private:
 	float _speed_factor; // Чтоб летели с разной скоростью
 	float _rotation_factor; // Чтоб объекты крутились
-	FoodType _type;
+	FoodType _type; // Разновидность еды
 	Texture texture;
 	Sprite *sprite;
-	bool _bitten; //Не укущена ли уже еда? (Частично костыль, частично грамотная штука)
+	bool _bitten; //Не укушена ли уже еда? (Частично костыль, частично грамотная штука)
 };
 
 
