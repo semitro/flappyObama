@@ -18,14 +18,18 @@ SOURCES += main.cpp\
     map.cpp \
     food.cpp \
     menu.cpp \
-    bestscore.cpp
+    bestscore.cpp \
+    pause.cpp \
+    button.cpp
 
 HEADERS  += mainwindow.h \
     obama.h \
     map.h \
     food.h \
     menu.h \
-    bestscore.h
+    bestscore.h \
+    pause.h \
+    button.h
 
 FORMS    += mainwindow.ui
 LIBS += -L"/home/semitro/libs/SFML-2.2/lib"

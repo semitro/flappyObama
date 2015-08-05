@@ -11,7 +11,7 @@
 #include <list>
 #include "menu.h"
 #include "bestscore.h"
-
+#include "pause.h"
 namespace Ui {
 class MainWindow;
 }

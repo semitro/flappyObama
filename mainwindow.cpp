@@ -46,7 +46,8 @@ void MainWindow::on_StartGameButton_clicked()
 	float complexityTime = rand()%2+5; // Сложность будет постепенно увеличиваться
 									  // Сделаем так, что она обратно пропорционально сией переменной
 ////////////////////////////////////////////////////////////////////////////////////
-	//main loop
+	Pause pause(w);
+		//main loop
 	while(w.isOpen()){
 		if(complexityTime>0.005)
 			complexityTime -= 0.001;
@@ -87,6 +88,10 @@ void MainWindow::on_StartGameButton_clicked()
 					obama.jump();
 			if(event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::Space))
 					obama.jump();
+			if(event.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::F9)){
+				pause.exec();
+				clock.restart();
+			}
 		}
 ////////////////////////////////////////////////////////////////////////////////////
 		obama.Update(currentTime);
