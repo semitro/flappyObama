@@ -2,14 +2,19 @@
 #define OBAMA_H
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <SFML/Window.hpp>
+
+#include <sstream>
+#include "gameMode.h"
+#include "bestscore.h"
 #include "food.h"
 #include "map.h"
-#include <sstream>
-#include <bestscore.h>
+
 using namespace sf;
+
 class Obama{
 public:
-	Obama(RenderWindow &w,bool enableSounds=true);
+	Obama(RenderWindow &w, GameMode game_mode, bool enableSounds=true );
 	~Obama();
 	void jump(); // Прыгай, Обама!
 	void render(RenderWindow &w);
@@ -37,6 +42,7 @@ private:
 	Text *_text_score; // Вывод счёта
 	Music _flap_sound; // Звук подлёта
 	bool _enable_sounds; // Включать ли звуки?
+	GameMode _game_mode; // Что делать при попадании балалаек?
 };
 #endif // OBAMA_H
 

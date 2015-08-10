@@ -2,16 +2,7 @@
 #define MAINWINDOW_H
 #include <QMainWindow>
 #include <QApplication>
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Audio.hpp>
-#include "obama.h"
-#include "map.h"
-#include "food.h"
-#include <list>
-#include "menu.h"
-#include "bestscore.h"
-#include "pause.h"
+#include "game.h"
 namespace Ui {
 class MainWindow;
 }

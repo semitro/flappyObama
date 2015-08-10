@@ -10,6 +10,24 @@
     <height>283</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>420</width>
+    <height>283</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>420</width>
+    <height>283</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>FlappyObama</string>
   </property>
@@ -42,7 +60,7 @@
      <string>Начать игру!</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="label_buter">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -59,7 +77,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>60</y>
+      <y>70</y>
       <width>281</width>
       <height>31</height>
      </rect>
@@ -75,7 +93,7 @@
      <string>Лучший счёт: </string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="label_buter_2">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -91,10 +109,10 @@
    <widget class="QCheckBox" name="checkBox_sound">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>100</y>
+      <x>270</x>
+      <y>72</y>
       <width>97</width>
-      <height>22</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
@@ -112,7 +130,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -171,16 +189,57 @@
      </item>
     </layout>
    </widget>
-   <zorder>label_5</zorder>
-   <zorder>label_4</zorder>
-   <zorder>label_Obama</zorder>
+   <widget class="QComboBox" name="comboBox_mode">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>100</y>
+      <width>151</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <item>
+     <property name="text">
+      <string>One shot - one kill</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Удар - отнял</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="label_mode">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>100</y>
+      <width>146</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>URW Gothic L</family>
+      <pointsize>17</pointsize>
+      <italic>false</italic>
+     </font>
+    </property>
+    <property name="text">
+     <string>Режим игры:</string>
+    </property>
+   </widget>
+   <zorder>layoutWidget</zorder>
+   <zorder>label_buter</zorder>
+   <zorder>label_buter_2</zorder>
+   <zorder>layoutWidget</zorder>
    <zorder>StartGameButton</zorder>
    <zorder>label_score</zorder>
-   <zorder>label_app_name</zorder>
    <zorder>checkBox_sound</zorder>
-   <zorder>label_Obama_2</zorder>
-   <zorder>horizontalSpacer</zorder>
-   <zorder>horizontalSpacer_2</zorder>
+   <zorder>comboBox_mode</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

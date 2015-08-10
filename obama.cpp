@@ -1,6 +1,7 @@
 #include <obama.h>
-Obama::Obama(RenderWindow &w, bool enableSounds){
-	_enable_sounds = enableSounds;
+Obama::Obama(RenderWindow &w, GameMode game_mode, bool enableSounds){
+	_enable_sounds = enableSounds; // Инициализация, мадафака
+	_game_mode = game_mode;
 	_alive = true;
 	_score = 0;
 	_factor_speed = 0;
@@ -67,36 +68,60 @@ void Obama::kill(Food &food){
 		}
 		return;
 	}
-	//Убиваем обаму
-	_alive = false;
+	//Убиваем обаму, если такой мод
+	if(_game_mode == one_shot_one_kill)
+		_alive = false;
+	if(_game_mode == ball_down && !food.bitten()){
+		food.bitten();
+		food.eat();
+		switch (killed_by) {
+		case Food::Balalaika:
+			addScore(-21); // На самом деле прибавляться будет -6+1 баллов (1 за вылет)
+			break;
+		case Food::Matryoshka:
+			addScore(-21);
+			break;
+		case Food::Pechka:
+			addScore(-51);
+			break;
+		case Food::Vodka:
+			addScore(-36);
+			break;
+		case Food::Putin:
+			_score = 0;
+		default:
+			break;
+		}
+	}
 	//Обнищаем стрик
 	_streak_best = false;
-	switch (killed_by) {
-	case Food::Balalaika:
-		if(rand()%2 == 0)
-			sound.openFromFile("Sounds/Balalaika/balalaika.ogg");
-		else
-			sound.openFromFile("Sounds/Balalaika/balalaika2.ogg");
-		break;
-	case Food::Matryoshka:
-		sound.openFromFile("Sounds/laught.ogg");
-		break;
-	case Food::Vodka:{
-		int select = rand()%3;
+	if(_enable_sounds){
+		switch (killed_by) { // Загрузка озвучки
+		case Food::Balalaika:
+			if(rand()%2 == 0)
+				sound.openFromFile("Sounds/Balalaika/balalaika.ogg");
+			else
+				sound.openFromFile("Sounds/Balalaika/balalaika2.ogg");
+			break;
+		case Food::Matryoshka:
+			sound.openFromFile("Sounds/laught.ogg");
+			break;
+		case Food::Vodka:{
+			int select = rand()%3;
 			if(select == 0)
 				sound.openFromFile("Sounds/Vodka/Vodka1.ogg");
-					else
+			else
 				if(select == 1)
 					sound.openFromFile("Sounds/Vodka/Vodka2.ogg");
-						else
+				else
 					sound.openFromFile("Sounds/Vodka/Vodka3.ogg");}
-		break;
-	case Food::Putin:
-		sound.openFromFile("Sounds/Putin.ogg");
-		break;
-	}
-	if(_enable_sounds)
+			break;
+		case Food::Putin:
+			sound.openFromFile("Sounds/Putin.ogg");
+			break;
+		}
 		sound.play();
+	}
 }
 void Obama::kill_by_ground(){
 	if(!_alive)
@@ -165,8 +190,8 @@ void Obama::checkIntersect(Map &map){
 }
 void Obama::addScore(int ball){
 	_score += ball;
-	if(_score < 0)
-		_score = 0;
+	//if(_score < 0)
+		//_score = 0;
 	std::ostringstream score_stream;
 	score_stream << _score;
 	_text_score->setString(score_stream.str());

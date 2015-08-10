@@ -1,5 +1,5 @@
-#ifndef BESTSCORE
-#define BESTSCORE
+#ifndef BESTSCORE_H
+#define BESTSCORE_H
 #include <fstream>
 using std::ifstream;
 using std::ofstream;
