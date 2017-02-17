@@ -23,7 +23,7 @@ void Game::start(){
 	Menu menu;
 	std::list<Food*> balalaikes; // Объекты еды
 	std::list<Food*>::iterator it_balala;
-	sf::RenderWindow w(VideoMode(64*16,64*9),"FlappyObama, v 2.5",Style::Close);
+	sf::RenderWindow w(VideoMode(64*16,64*9),"Flybama 1.0",Style::Close);
 	w.setPosition(sf::Vector2i(128,0));
 	w.setFramerateLimit(65);
 	Image img;
