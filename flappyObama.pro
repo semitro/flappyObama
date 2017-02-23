@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     bestscore.cpp \
     pause.cpp \
     button.cpp \
-    game.cpp
+    game.cpp \
+    snow.cpp
 
 HEADERS  += mainwindow.h \
     obama.h \
@@ -32,7 +33,8 @@ HEADERS  += mainwindow.h \
     pause.h \
     button.h \
     game.h \
-    gameMode.h
+    gameMode.h \
+    snow.h
 
 FORMS    += mainwindow.ui
 LIBS += -L"/home/semitro/libs/SFML-2.2/lib"

@@ -12,6 +12,7 @@
 #include "pause.h"
 #include "obama.h"
 #include "gameMode.h"
+#include "snow.h"
 class Game
 {
 public:

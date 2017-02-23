@@ -18,7 +18,6 @@ private:
 	Texture texture_grass;
 	Texture background_image; // Трава и фон
 	Sprite *sprite_grass, *sprite_city;
-	std::list<CircleShape> snow;
 	float _anim_coeff; // Чтоб трава ехала)
 };
 

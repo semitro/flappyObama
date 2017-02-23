@@ -1,4 +1,4 @@
-#include "game.h"
+ #include "game.h"
 
 Game::Game(GameMode mode, bool soundsOn)
 {
@@ -30,6 +30,7 @@ void Game::start(){
 	img.loadFromFile("Images/icon.png");
 	w.setIcon(64,64,img.getPixelsPtr());
 	Obama obama(w,_mode,_soundsOn);
+	Snow snow; // Летающие частицы, создаёт иллюзию движения
 	Event event;
 	Clock clock;
 	Clock nextFoodSpawnTimer;
@@ -88,7 +89,9 @@ void Game::start(){
 ////////////////////////////////////////////////////////////////////////////////////
 		obama.Update(currentTime);
 		map.update(currentTime,obama.alive());
+		snow.update();
 		map.render(w);
+		snow.render(w);
 ////////////////////////////////////////////////////////////////////////////////////
 		// Проверка столкновения с едой
 		for(it_balala=balalaikes.begin();it_balala!=balalaikes.end();it_balala++){
